@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ogulcan Egri - Portfolio</title>
+
+<style>
+:root {
+    --bg: #0b0b0d;
+    --card: #111113;
+    --border: rgba(255,255,255,0.08);
+    --text: #f5f5f7;
+    --secondary: #a1a1a6;
+    --accent: #2997ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* NAVBAR */
+nav {
+    position: fixed;
+    width: 100%;
+    padding: 18px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15,15,18,0.6);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+}
+
+.logo { font-weight: 500; font-size: 18px; }
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 40px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--secondary);
+    font-size: 15px;
+    transition: 0.3s ease;
+}
+
+nav ul li a:hover { color: var(--text); }
+
+/* SECTIONS */
+section { padding: 160px 12% 120px; }
+
+/* HERO */
+.hero h1 { font-size: 52px; font-weight: 600; letter-spacing: -1px; }
+.hero p { margin-top: 20px; font-size: 20px; color: var(--secondary); max-width: 600px; line-height: 1.6; }
+
+/* DISCORD CARD */
+.discord-card {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 22px;
+    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    width: fit-content;
+}
+.discord-avatar { width: 52px; height: 52px; border-radius: 50%; }
+.discord-info { display: flex; flex-direction: column; }
+#discordName { font-size: 15px; }
+.status { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--secondary); margin-top: 4px; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: gray; }
+
+/* PROJECTS */
+.projects-grid {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+.project-card {
+    background: var(--card);
+    padding: 30px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    transition: 0.3s ease;
+}
+.project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.2);
+}
+.project-card h3 { margin-bottom: 10px; }
+.project-card p { font-size: 14px; color: var(--secondary); margin-bottom: 15px; }
+.project-card a { text-decoration: none; color: var(--accent); font-size: 14px; }
+
+/* CONTACT */
+.contact a { display: inline-block; margin-right: 25px; margin-top: 20px; text-decoration: none; color: var(--accent); font-size: 15px; }
+
+/* FOOTER */
+footer { text-align: center; padding: 40px; color: var(--secondary); font-size: 14px; border-top: 1px solid var(--border); }
+
+@media(max-width:768px){
+    .hero h1 { font-size: 36px; }
+    nav ul { gap: 20px; }
+}
+.spotlight {
+    position: fixed;
+    pointer-events: none;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+    z-index: 999;
+}
+</style>
+</head>
+<body>
+<div class="spotlight" id="spotlight"></div>
+<nav>
+    <div class="logo">Ogulcan Egri</div>
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contacts</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="about">
+    <h1>Hello, me <span id="heroName"></span></h1>
+    <p>Game Development, Map Design, Graphic Designer</p>
+
+    <!-- Discord Card -->
+    <div class="discord-card">
+        <img id="discordAvatar" class="discord-avatar" />
+        <div class="discord-info">
+            <span id="discordName"></span>
+            <div class="status">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusText"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <h1>Projects</h1>
+    <div class="projects-grid"></div>
+</section>
+
+<section id="contact">
+    <h1>Contacts</h1>
+    <div class="contact">
+        <a href="mailto:mail@example.com">Mail</a>
+        <a href="https://github.com/oglcnnnn" target="_blank">GitHub</a>
+    </div>
+</section>
+
+<footer>© 2026 Ogulcan Egri</footer>
+
+<script>
+// Discord Lanyard
+const discordId = "1066755391691690014"; // kendi Discord ID
+async function fetchDiscordUser() {
+    try {
+        const res = await fetch(`https://api.lanyard.rest/v1/users/${discordId}`);
+        const data = (await res.json()).data;
+        const user = data.discord_user;
+        const status = data.discord_status;
+
+        document.getElementById("discordName").innerText = user.username;
+        document.getElementById("heroName").innerText = user.username;
+        document.getElementById("discordAvatar").src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+        const statusColors = { online:"#23a55a", idle:"#f0b232", dnd:"#f23f43", offline:"#80848e" };
+        document.getElementById("statusDot").style.background = statusColors[status] || "gray";
+        document.getElementById("statusText").innerText = status;
+    } catch(e){console.error("Discord fetch error:",e);}
+}
+fetchDiscordUser();
+setInterval(fetchDiscordUser,30000);
+
+// GitHub Projects
+const githubUsername = "oglcnnnn";
+const projectsContainer = document.querySelector(".projects-grid");
+async function fetchGithubProjects(){
+    try{
+        const res = await fetch(`https://api.github.com/users/${githubUsername}/repos`);
+        const repos = await res.json();
+        repos.sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at));
+        projectsContainer.innerHTML = "";
+        repos.slice(0,6).forEach(repo => {
+    const card = document.createElement("div");
+    card.classList.add("project-card");
+    
+    // Eğer description boşsa <p> ekleme
+    const descriptionHTML = repo.description ? `<p>${repo.description}</p>` : "";
+
+    card.innerHTML = `
+        <h3>${repo.name}</h3>
+        ${descriptionHTML}
+        <a href="${repo.html_url}" target="_blank">GitHub →</a>
+    `;
+    projectsContainer.appendChild(card);
+});
+    }catch(e){console.error("GitHub fetch error:",e);}
+}
+fetchGithubProjects();
+</script>
+<script>
+  const spotlight = document.getElementById("spotlight");
+
+// Mouse hareketi ile spotlight’i takip ettir
+document.addEventListener("mousemove", e => {
+    spotlight.style.left = e.clientX + "px";
+    spotlight.style.top = e.clientY + "px";
+});
+
+// Linklere hover etkisi
+document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("mouseenter", () => {
+        spotlight.style.width = "350px"; // büyüt
+        spotlight.style.height = "350px";
+    });
+    link.addEventListener("mouseleave", () => {
+        spotlight.style.width = "200px"; // eski boyuta dön
+        spotlight.style.height = "200px";
+    });
+});
+</script>
+</body>
+</html>
