@@ -3,7 +3,7 @@
 
 - 🔭 I’m currently working on **Riya-S EL Kaffar**
 
-- 💬 You can reach me through these channels. **İnstagram :[ https://instagram.com/oglcnnnn._ ] Mail :[ ogulcanegri1906@gmail.com ]**
+- 💬 You can reach me through these channels. **Mail :[ ogulcanegri1906@gmail.com ]**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
