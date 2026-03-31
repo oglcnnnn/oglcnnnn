@@ -7,128 +7,69 @@
 
 <style>
 :root {
-    --bg: #0b0b0d;
-    --card: #111113;
+    --bg: #0b0c17;
+    --card: rgba(255,255,255,0.05);
     --border: rgba(255,255,255,0.08);
-    --text: #f5f5f7;
-    --secondary: #a1a1a6;
-    --accent: #2997ff;
+    --text: #ffffff;
+    --secondary: #a0a6b0;
+    --accent: #5da9ff;
+    --glow: 0 0 40px rgba(93,169,255,0.3);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-    scroll-behavior: smooth;
-}
-
-body {
-    background: var(--bg);
-    color: var(--text);
-}
+/* GLOBAL */
+* { margin:0; padding:0; box-sizing:border-box; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; scroll-behavior:smooth; }
+body { background:#0b0c17; color:var(--text); overflow-x:hidden; }
 
 /* NAVBAR */
-nav {
-    position: fixed;
-    width: 100%;
-    padding: 18px 8%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(15,15,18,0.6);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    z-index: 1000;
-}
-
-.logo { font-weight: 500; font-size: 18px; }
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 40px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: var(--secondary);
-    font-size: 15px;
-    transition: 0.3s ease;
-}
-
-nav ul li a:hover { color: var(--text); }
-
-/* SECTIONS */
-section { padding: 160px 12% 120px; }
+nav { position:fixed; width:100%; padding:20px 10%; display:flex; justify-content:space-between; align-items:center; background:rgba(11,12,23,0.6); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); z-index:1000; }
+nav .logo { font-weight:600; font-size:18px; }
+nav ul { list-style:none; display:flex; gap:35px; }
+nav ul li a { text-decoration:none; color:var(--secondary); font-size:15px; transition:0.3s; position:relative; }
+nav ul li a::after { content:""; position:absolute; bottom:-5px; left:0; width:0%; height:2px; background:var(--accent); transition:0.3s; }
+nav ul li a:hover { color:var(--text); }
+nav ul li a:hover::after { width:100%; }
 
 /* HERO */
-.hero h1 { font-size: 52px; font-weight: 600; letter-spacing: -1px; }
-.hero p { margin-top: 20px; font-size: 20px; color: var(--secondary); max-width: 600px; line-height: 1.6; }
+section { padding:180px 12% 120px; }
+.hero h1 { font-size:clamp(38px,6vw,70px); font-weight:700; letter-spacing:-1px; line-height:1.1; }
+.typing-text { margin-top:25px; font-size:22px; color:var(--accent); height:30px; font-weight:500; text-shadow:var(--glow); }
 
 /* DISCORD CARD */
-.discord-card {
-    margin-top: 40px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 18px 22px;
-    border-radius: 18px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    width: fit-content;
-}
-.discord-avatar { width: 52px; height: 52px; border-radius: 50%; }
-.discord-info { display: flex; flex-direction: column; }
-#discordName { font-size: 15px; }
-.status { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--secondary); margin-top: 4px; }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: gray; }
+.discord-card { margin-top:50px; display:flex; align-items:center; gap:20px; padding:25px 30px; border-radius:22px; background:var(--card); border:1px solid var(--border); backdrop-filter:blur(20px); transition:0.4s; }
+.discord-card:hover { transform:translateY(-8px); box-shadow:var(--glow); }
+.discord-avatar { width:60px; height:60px; border-radius:50%; border:2px solid var(--border); }
+.discord-info { display:flex; flex-direction:column; }
+#discordName { font-size:16px; font-weight:500; }
+.status { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--secondary); margin-top:6px; }
+.status-dot { width:8px; height:8px; border-radius:50%; }
 
 /* PROJECTS */
-.projects-grid {
-    margin-top: 60px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-.project-card {
-    background: var(--card);
-    padding: 30px;
-    border-radius: 18px;
-    border: 1px solid var(--border);
-    transition: 0.3s ease;
-}
-.project-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(255,255,255,0.2);
-}
-.project-card h3 { margin-bottom: 10px; }
-.project-card p { font-size: 14px; color: var(--secondary); margin-bottom: 15px; }
-.project-card a { text-decoration: none; color: var(--accent); font-size: 14px; }
+.projects-grid { margin-top:80px; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:40px; }
+.project-card { background:var(--card); padding:40px; border-radius:26px; border:1px solid var(--border); backdrop-filter:blur(20px); transition:0.4s; }
+.project-card:hover { transform:translateY(-10px); box-shadow:var(--glow); }
+.project-card h3 { margin-bottom:15px; font-size:20px; }
+.project-card p { font-size:14px; color:var(--secondary); margin-bottom:20px; line-height:1.6; }
+.project-card a { color:var(--accent); text-decoration:none; font-weight:500; }
 
 /* CONTACT */
-.contact a { display: inline-block; margin-right: 25px; margin-top: 20px; text-decoration: none; color: var(--accent); font-size: 15px; }
+.contact a { display:inline-block; margin-right:30px; margin-top:30px; text-decoration:none; color:var(--accent); font-size:16px; }
 
 /* FOOTER */
-footer { text-align: center; padding: 40px; color: var(--secondary); font-size: 14px; border-top: 1px solid var(--border); }
+footer { text-align:center; padding:60px 20px; color:var(--secondary); border-top:1px solid var(--border); margin-top:100px; }
 
+/* SPOTLIGHT */
+.spotlight { position:fixed; pointer-events:none; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle, rgba(93,169,255,0.25) 0%, rgba(93,169,255,0) 70%); transform:translate(-50%,-50%); transition:width 0.3s ease,height 0.3s ease; z-index:999; }
+
+/* RESPONSIVE */
 @media(max-width:768px){
-    .hero h1 { font-size: 36px; }
-    nav ul { gap: 20px; }
-}
-.spotlight {
-    position: fixed;
-    pointer-events: none;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
-    transform: translate(-50%, -50%);
-    transition: width 0.3s ease, height 0.3s ease;
-    z-index: 999;
+    section { padding:150px 8% 100px; }
+    nav { padding:18px 6%; }
+    nav ul { gap:20px; }
+    .discord-card { width:100%; }
 }
 </style>
 </head>
+
 <body>
 <div class="spotlight" id="spotlight"></div>
 <nav>
@@ -142,9 +83,8 @@ footer { text-align: center; padding: 40px; color: var(--secondary); font-size: 
 
 <section class="hero" id="about">
     <h1>Hello, me <span id="heroName"></span></h1>
-    <p>Game Development, Map Design, Graphic Designer</p>
+    <div class="typing-text" id="typing"></div>
 
-    <!-- Discord Card -->
     <div class="discord-card">
         <img id="discordAvatar" class="discord-avatar" />
         <div class="discord-info">
@@ -174,7 +114,7 @@ footer { text-align: center; padding: 40px; color: var(--secondary); font-size: 
 
 <script>
 // Discord Lanyard
-const discordId = "1066755391691690014"; // kendi Discord ID
+const discordId = "1066755391691690014";
 async function fetchDiscordUser() {
     try {
         const res = await fetch(`https://api.lanyard.rest/v1/users/${discordId}`);
@@ -189,7 +129,7 @@ async function fetchDiscordUser() {
         const statusColors = { online:"#23a55a", idle:"#f0b232", dnd:"#f23f43", offline:"#80848e" };
         document.getElementById("statusDot").style.background = statusColors[status] || "gray";
         document.getElementById("statusText").innerText = status;
-    } catch(e){console.error("Discord fetch error:",e);}
+    } catch(e){console.error(e);}
 }
 fetchDiscordUser();
 setInterval(fetchDiscordUser,30000);
@@ -204,42 +144,49 @@ async function fetchGithubProjects(){
         repos.sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at));
         projectsContainer.innerHTML = "";
         repos.slice(0,6).forEach(repo => {
-    const card = document.createElement("div");
-    card.classList.add("project-card");
-    
-    // Eğer description boşsa <p> ekleme
-    const descriptionHTML = repo.description ? `<p>${repo.description}</p>` : "";
-
-    card.innerHTML = `
-        <h3>${repo.name}</h3>
-        ${descriptionHTML}
-        <a href="${repo.html_url}" target="_blank">GitHub →</a>
-    `;
-    projectsContainer.appendChild(card);
-});
-    }catch(e){console.error("GitHub fetch error:",e);}
+            const card = document.createElement("div");
+            card.classList.add("project-card");
+            const descriptionHTML = repo.description ? `<p>${repo.description}</p>` : "";
+            card.innerHTML = `<h3>${repo.name}</h3>${descriptionHTML}<a href="${repo.html_url}" target="_blank">GitHub →</a>`;
+            projectsContainer.appendChild(card);
+        });
+    }catch(e){console.error(e);}
 }
 fetchGithubProjects();
-</script>
-<script>
-  const spotlight = document.getElementById("spotlight");
 
-// Mouse hareketi ile spotlight’i takip ettir
+// Typing Effect
+const typingText = "Game Development, Map Design, Graphic Designer, Front End Developer";
+const typingElement = document.getElementById("typing");
+let charIndex = 0;
+let deleting = false;
+
+function typeEffectSingle() {
+    if (!deleting) {
+        typingElement.textContent = typingText.substring(0, charIndex++);
+        if (charIndex > typingText.length) {
+            deleting = true;
+            setTimeout(typeEffectSingle, 1500);
+            return;
+        }
+    } else {
+        typingElement.textContent = typingText.substring(0, charIndex--);
+        if (charIndex < 0) {
+            deleting = false;
+        }
+    }
+    setTimeout(typeEffectSingle, deleting ? 40 : 70);
+}
+typeEffectSingle();
+
+// Spotlight
+const spotlight = document.getElementById("spotlight");
 document.addEventListener("mousemove", e => {
     spotlight.style.left = e.clientX + "px";
     spotlight.style.top = e.clientY + "px";
 });
-
-// Linklere hover etkisi
 document.querySelectorAll("a").forEach(link => {
-    link.addEventListener("mouseenter", () => {
-        spotlight.style.width = "350px"; // büyüt
-        spotlight.style.height = "350px";
-    });
-    link.addEventListener("mouseleave", () => {
-        spotlight.style.width = "200px"; // eski boyuta dön
-        spotlight.style.height = "200px";
-    });
+    link.addEventListener("mouseenter", () => { spotlight.style.width = "350px"; spotlight.style.height = "350px"; });
+    link.addEventListener("mouseleave", () => { spotlight.style.width = "300px"; spotlight.style.height = "300px"; });
 });
 </script>
 </body>
